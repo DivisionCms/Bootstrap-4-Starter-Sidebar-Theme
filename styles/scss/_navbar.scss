@@ -1,0 +1,90 @@
+/**
+ * Gestion du comportement de la nav-bar
+ * @version 0.1 - 23/01/2019 by ML -
+ */
+
+.navbar {
+
+  .navbar-menu-wrapper {
+    color: white;
+    width: calc(100% - 255px);
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: width 0.25s ease;
+    -webkit-transition: width 0.25s ease;
+    -moz-transition: width 0.25s ease;
+    -ms-transition: width 0.25s ease;
+
+    .navbar-toggler { color: white; }
+    .navbar-nav {
+
+      .nav-item {
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      .btn {
+        color: white;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+
+.navbar.navbar-primary { background-color: $primary-color; }
+
+
+.navbar-brand-wrapper {
+  width: 255px;
+  height: 58px;
+
+  .brand-logo-mini { display: none; }
+}
+
+.sidebar-dark .navbar .navbar-brand-wrapper {
+  background-color: $sidebar-dark-color;
+}
+
+.sidebar-icon-only .navbar .navbar-brand-wrapper {
+  width: 75px;
+
+  .brand-logo { display: none; }
+  .brand-logo-mini { display: block; }
+}
+
+/**
+ * Navigation navbar sur le écrans inférieur à 991px
+ */
+@media screen and (max-width: 991px) {
+
+  .navbar-brand-wrapper {
+    width: 75px;
+
+    .brand-logo { display: none; }
+    .brand-logo-mini { display: block; }
+  }
+
+  .navbar {
+
+    .navbar-menu-wrapper {
+      width: calc(100% - 75px);
+    }
+  }
+
+  .navbar .navbar-menu-wrapper .navbar-toggler:not(.navbar-toggler-right) {
+    display: none;
+  }
+}
+
+.sidebar-icon-only .navbar .navbar-menu-wrapper {
+  width: calc(100% - 75px);
+}
+
+.navbar .navbar-brand-wrapper {
+  transition: width 0.25s ease, background 0.25s ease;
+  -webkit-transition: width 0.25s ease, background 0.25s ease;
+  -moz-transition: width 0.25s ease, background 0.25s ease;
+  -ms-transition: width 0.25s ease, background 0.25s ease;
+}

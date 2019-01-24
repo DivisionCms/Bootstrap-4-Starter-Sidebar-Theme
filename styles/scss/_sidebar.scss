@@ -1,0 +1,316 @@
+/**
+ * Gestion du comportement de la sidebar
+ * Par défaut, la sidebar fait 255px de large.
+ * @version 0.1 - 23/01/2019 by ML -
+ */
+.sidebar {
+  width: 255px;
+  min-height: 100%;
+  position: absolute;
+  padding: 0;
+  z-index: 11;
+  -webkit-transition: width 0.25s ease, background 0.25s ease;
+  -moz-transition: width 0.25s ease, background 0.25s ease;
+  -ms-transition: width 0.25s ease, background 0.25s ease;
+  transition: width 0.25s ease, background 0.25s ease;
+
+    .nav {
+      overflow: hidden;
+      flex-wrap: nowrap;
+      flex-direction: column;
+
+      //Gestion des éléments de navigation par défaut
+      // LI
+      .nav-item {
+
+        // A
+        .nav-link {
+          align-items: center;
+          display: flex;
+          padding: 1rem 1.875rem;
+          white-space: nowrap;
+          height: 52px;
+          color: white;
+
+          //comportement des icones de menu par défaut
+          i.menu-icon {
+            margin-right: 1.25rem;
+            font-size: 0.9375rem;
+            line-height: 1;
+          }
+
+          //Titre des menus par défaut
+          .menu-title {
+            display: inline-block;
+            font-size: 0.875rem;
+            line-height: 1;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .nav.sub-menu {
+      margin-bottom: 0;
+      padding: 0 0 0 4.25rem;
+
+      .nav-item .nav-link {
+        color: white;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        line-height: 1;
+        height: auto;
+        position: relative;
+
+        &:before {
+          background: white;
+          content: "";
+          position: absolute;
+          width: 7px;
+          height: 7px;
+          border-radius: 100%;
+          margin-left: -1.25rem;
+          top: 15px;
+        }
+
+        &:hover {
+          color: #999999;
+        }
+      }
+    }
+}
+
+/**
+ * Lorsque la classe .sidebar-icon-only est présente
+ * Nous allons retravailler la sidebar pour afficher uniquements les icones
+ */
+.sidebar-icon-only {
+
+  .sidebar {
+    width: 75px;
+
+    //On masque les badge et les liens
+    .nav .nav-item .nav-link .menu-title,
+    .sidebar-icon-only .sidebar .nav .nav-item .nav-link .badge {
+      display: none;
+    }
+
+    .nav.sub-menu {
+      padding: 0 0 0 2.25rem;
+    }
+  }
+
+  //On décale le contenu de la taille de sidebar et lui re-affecte sa largeur
+  .content-wrapper, footer.footer {
+    margin-left: 75px;
+    width: calc(100% - 75px);
+  }
+}
+
+/**
+ * Lorsque la classe .sidebar-hidden est présente, on masque la sidebar
+ * On re-affecte la taille au contenu (pas de décalage et 100% de la largeur)
+ */
+.sidebar-hidden {
+
+  .sidebar {
+    transition: width 0.25s ease;
+    -webkit-transition: width 0.25s ease;
+    -moz-transition: width 0.25s ease;
+    -ms-transition: width 0.25s ease;
+    width: 0;
+  }
+
+  .content-wrapper, footer.footer {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/**
+ * Lorsque la classe .sidebar-dark est présente, on va modifier les couleurs de fonds et des liens
+ */
+.sidebar-dark .sidebar {
+  background-color: $sidebar-dark-color;
+
+  .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile) > .nav-link,
+  .nav:not(.sub-menu) > .nav-item:not(.nav-profile) > .nav-link[aria-expanded="true"]{
+    background: #39363f;
+    color: #ffffff;
+  }
+}
+
+//Ecran supérieur a 991px
+@media screen and(min-width: 992px) {
+
+  //lorsque l'on a la class .sidebar-icon-only
+  .sidebar-icon-only .sidebar .nav .nav-item {
+
+    .nav-link .menu-title {
+      display: none;
+      -webkit-align-items: center;
+      align-items: center;
+      background: linear-gradient(88deg, #13b4ca, #18cabe); //@todo voir pour le background par défaut
+      color: #ffffff;
+      padding: 0.5rem 1.25rem;
+      left: 75px;
+      position: absolute;
+      text-align: left;
+      width: 200px;
+      z-index: 1;
+      height: 52px;
+      line-height: 1.8;
+      border-top-right-radius: 5px;
+    }
+
+    .collapse, .collapsing {
+      display: none;
+      padding: .5rem 0;
+      background: linear-gradient(88deg, #13b4ca, #18cabe); //@todo voir pour change rle background par défaut
+      position: absolute;
+      left: 75px;
+      width: 200px;
+      border-bottom-right-radius: 5px;
+      -webkit-box-shadow: 0 1px 15px 1px rgba(113, 106, 202, 0.08);
+      -moz-box-shadow: 0 1px 15px 1px rgba(113, 106, 202, 0.08);
+      box-shadow: 0 1px 15px 1px rgba(113, 106, 202, 0.08);
+    }
+
+    &:hover {
+      .nav-link .menu-title {
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      .collapse, .collapsing {
+        display: block;
+      }
+    }
+  }
+  .sidebar-icon-only.sidebar-dark .sidebar .nav .nav-item {
+    .nav-link .menu-title  {
+      background: #39363f;
+    }
+
+    .collapse, .collapsing {
+      background: $sidebar-dark-color;
+    }
+  }
+}
+
+/**
+ * Ecran inférieur a 991px
+ * la sidebar n'est plus affiché à l'écran, il faut cliquer sur un bouton pour la voir apparaitre (toggle)
+ */
+@media screen and (max-width: 991px) {
+
+  //Par défaut la sidebar est donc collé en haut de page, et à une largeur de 50%;
+  .sidebar {
+    top: 0;
+    width: 50%;
+  }
+
+  //Lorsque la classe .sidebar-icon-only est active,
+  //Mais que nous sommes sur un écran indéfieur a 991px
+  //On affiche quand même les textes car la sidebar est affiché sur demande dans le canvas
+  .sidebar-icon-only {
+    .sidebar {
+
+      width: 50%;
+      top: 0;
+
+      //On masque les badge et les liens
+      .nav .nav-item .nav-link .menu-title,
+      .sidebar-icon-only .sidebar .nav .nav-item .nav-link .badge {
+        display: block;
+      }
+    }
+
+    //On re-affecte 100% de largeur au contenu
+    .content-wrapper, footer.footer {
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  //Le paramètre .row-offcanvas-(sens) permet de définir si on veut la soir s'afficher par la droite ou la gauche
+  .row-offcanvas.sidebar-offcanvas-left { left: 0; }
+  .row-offcanvas.sidebar-offcanvas-right{ right: 0; }
+  //on décale la sidebar de -100% sur la gauche ou la droite ce qui correspond a la sidebar + 50% du canvas vide
+  .row-offcanvas.sidebar-offcanvas-left .sidebar { left: -100%; }
+  .row-offcanvas.sidebar-offcanvas-right .sidebar { right: -100%; }
+  //Lorsque la classe .active est affecté au même niveau que .row-offcanvas, on va afficher la sidebar
+  //On commence par décaler de 50% le canvas qui va contenir les élements (le conteneur prend donc 50% de la page)
+  //Ensuite, on décale la sidebar de -50% (sa taille) pour qu'elle s'intègre dans le conteneur
+  .row-offcanvas.active.sidebar-offcanvas-left { left: 50%; .sidebar { left: -50% } }
+  .row-offcanvas.active.sidebar-offcanvas-right { right: 50%; .sidebar { right: -50%; } }
+}
+
+/**
+ * Pour les écran donc la largeur est inférieur a 580px
+ * On va redéfinir la taille de la sidebar et son décalage pour l'afficher un peu plus grosse
+ */
+@media screen and (max-width: 580px) {
+
+  //Par défaut la sidebar est donc collé en haut de page, et à une largeur de 75%;
+  .sidebar {
+    top: 0;
+    width: 75%;
+  }
+
+  //Lorsque la classe .sidebar-icon-only est active,
+  //Mais que nous sommes sur un écran indéfieur a 580px
+  //On affiche quand même les textes car la sidebar est affiché sur demande dans le canvas
+  .sidebar-icon-only {
+    .sidebar {
+
+      width: 75%;
+      top: 0;
+
+      //On masque les badge et les liens
+      .nav .nav-item .nav-link .menu-title,
+      .sidebar-icon-only .sidebar .nav .nav-item .nav-link .badge {
+        display: block;
+      }
+    }
+  }
+
+  //Gestion du décalage en fonction de la nouvelle taille de la sidebar
+  //A ce niveau on effectue un calcule rapide pour soustraire également le padding du .container-fluid parent
+  .row-offcanvas.active.sidebar-offcanvas-left { left: 75%; .sidebar { left: calc(-70% - 15px) } }
+  .row-offcanvas.active.sidebar-offcanvas-right { right: 75%; .sidebar { right: calc(-70% - 15px) } }
+}
+
+/**
+ * Pour les écran donc la largeur est inférieur a 350
+ * On va redéfinir la taille de la sidebar et son décalage pour l'afficher un peu plus grosse
+ */
+@media screen and (max-width: 350px) {
+
+  //Par défaut la sidebar est donc collé en haut de page, et à une largeur de 75%;
+  .sidebar {
+    top: 0;
+    width: 90%;
+  }
+
+  //Lorsque la classe .sidebar-icon-only est active,
+  //Mais que nous sommes sur un écran indéfieur a 350
+  //On affiche quand même les textes car la sidebar est affiché sur demande dans le canvas
+  .sidebar-icon-only {
+    .sidebar {
+
+      width: 90%;
+      top: 0;
+
+      //On masque les badge et les liens
+      .nav .nav-item .nav-link .menu-title,
+      .sidebar-icon-only .sidebar .nav .nav-item .nav-link .badge {
+        display: block;
+      }
+    }
+  }
+
+  //Gestion du décalage en fonction de la nouvelle taille de la sidebar
+  .row-offcanvas.active.sidebar-offcanvas-left { left: 90%; .sidebar { left: calc(-85%) } }
+  .row-offcanvas.active.sidebar-offcanvas-right { right: 90%; .sidebar { right: calc(-85%) } }
+}

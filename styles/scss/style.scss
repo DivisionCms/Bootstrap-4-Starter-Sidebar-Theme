@@ -1,0 +1,66 @@
+/**
+* Librairies import
+*/
+@import '~bootstrap/scss/bootstrap';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+$simple-line-font-path: "~simple-line-icons/fonts/";
+@import "~simple-line-icons/scss/simple-line-icons";
+
+
+/**
+* Local import
+*/
+@import 'variables';
+@import 'navbar';
+@import 'sidebar';
+@import 'trash/footer';
+
+body {
+  font-family: $font;
+}
+
+.container-scroller {
+  overflow: hidden;
+}
+
+//Ce bloque va permettre de gérer le décalage entre la sidebar et le contenu
+//lorsque l'affichage atteint un certain niveau minimum de pixels
+//Les paramètres on gérer au niveau du fichier sidebar.scss
+.row-offcanvas {
+  position: relative;
+  -webkit-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  z-index: 11;
+}
+
+/**
+ * Bloque englobant le contenu du site
+ */
+.content-wrapper {
+  background: $background-color;
+  margin-left: 255px;
+  min-height: 100vh;
+  transition: width 0.25s ease, margin 0.25s ease;
+  width: calc(100% - 255px);
+  padding: 1.5rem 1.7rem;
+
+  @media screen and (max-width: 991px) {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+
+footer.footer {
+  margin-left: 255px;
+  width: calc(100% - 255px);
+  padding: 1.5rem 1.7rem;
+
+  @media screen and (max-width: 991px) {
+    margin-left: 0;
+    width: 100%;
+  }
+}
